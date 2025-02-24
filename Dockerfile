@@ -7,12 +7,11 @@ ARG PGCLIENT_VERSION=16.8-r0
 
 FROM alpine:3.21.3
 
-ARG USER
 ARG PGBOUNCER_VERSION
 ARG PGCLIENT_VERSION
 
-RUN adduser -S $USER
-
+# XXX: postgresql16-client is used independent of the underlying database. This
+# should be fine, since we really only want it for its `pg_isready` script.
 RUN <<-'EOS'
 set -ex
 apk add --no-cache \
@@ -24,7 +23,11 @@ EXPOSE 6432
 
 COPY --link rootfs /
 
-ENV USER=$USER
 ENV CONFIG_FILE=/etc/pgbouncer/pgbouncer.ini
 ENV USERLIST_PATH=/etc/pgbouncer/userlist.txt
+
+ARG USER
+ENV USER=$USER
+RUN adduser -S $USER
+
 ENTRYPOINT ["/opt/entry-point.sh"]

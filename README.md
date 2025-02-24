@@ -5,6 +5,8 @@
 | Variable | Default | Description |
 | --- | --- | --- |
 | `USER` | `pgbouncer` | The user as which to run PGBouncer. |
+| `PGBOUNCER_VERSION` | (see `Dockerfile`) | The version of the PGBouncer package to install. |
+| `PGCLIENT_VERSION` | (see `Dockerfile`) | The version of the PostgreSQL client package to install. |
 
 ## Environment Environment
 
