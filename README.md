@@ -1,1 +1,15 @@
 # PGBouncer image
+
+## Environment variables:
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `USER` | `pgbouncer` | The user as which to run PGBouncer. |
+| `CONFIG_FILE` | `/etc/pgbouncer/pgbouncer.ini` | The path to PGBouncer's configuration file. |
+| `USERLIST_PATH` | `/etc/pgbouncer/userlist.txt` | The default path to PGBouncer's list of users. If left unpopulated, we will try to populate it using Drupal-y environment variables. |
+| `DRUPAL_DB_USER` | (none) | A user name to accept inbound and forward to the backend. |
+| `DRUPAL_DB_PASSWORD` | (none) | A password associated with the given user. |
+| `PGHOST` | (none) | PostgreSQL host for connection test. |
+| `PGDATABASE` | (none) | PostgreSQL DB name for connection test. |
+| `PGUSER` | (none) | PostgreSQL user for connection test. |
+| `PGPASSWORD` | (none) | PostgreSQL user for connection test. |
