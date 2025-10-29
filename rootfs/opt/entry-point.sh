@@ -1,7 +1,5 @@
 #!/bin/sh
-set -eu
-
-EMPTY=""
+set -e
 
 if [ ! -f $USERLIST_PATH -a -n "$DRUPAL_DB_USER" -a -n "$DRUPAL_DB_PASSWORD" ] ; then
   echo "Creating auth_file"
