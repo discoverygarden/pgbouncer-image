@@ -3,25 +3,16 @@ set -eu
 
 EMPTY=""
 
-AUTH_TYPE=${AUTH_TYPE:-"md5"}
-
-if [ ! -f $USERLIST_PATH -a -n ${DRUPAL_DB_USER:-EMPTY} -a -n ${DRUPAL_DB_PASSWORD:-EMPTY} ] ; then
-  case $AUTH_TYPE in
-    md5)
-      credential="md5$(echo -n $DRUPAL_DB_PASSWORD$DRUPAL_DB_USER | md5sum - | cut -d" " -f1)"
-      ;;
-    plain)
-      credential=$DRUPAL_DB_PASSWORD
-      ;;
-    *)
-      echo $AUTH_TYPE is not supported
-      exit 1
-      ;;
-  esac
-  echo "$DRUPAL_DB_USER $credential" > $USERLIST_PATH
+if [ ! -f $USERLIST_PATH -a -n "$DRUPAL_DB_USER" -a -n "$DRUPAL_DB_PASSWORD" ] ; then
+  echo "Creating auth_file"
+  cat > $USERLIST_PATH <<EOF
+"$DRUPAL_DB_USER" "md5$(echo -n $DRUPAL_DB_PASSWORD$DRUPAL_DB_USER | md5sum - | cut -d" " -f1)"
+EOF
+else
+  echo "Skipping auth_file creation"
 fi
 
-if [ -n ${PGHOST:-EMPTY} -a -n ${PGDATABASE:-EMPTY} -a -n ${PGUSER:-EMPTY} -a -n ${PGPASSWORD:-EMPTY} ] ; then
+if [ -n "$PGHOST" -a -n "$PGDATABASE" -a -n "$PGUSER" -a -n "$PGPASSWORD" ] ; then
   ATTEMPTS=0
   while ! pg_isready ; do
     ATTEMPTS=$(($ATTEMPTS + 1))
