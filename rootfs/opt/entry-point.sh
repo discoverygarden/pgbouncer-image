@@ -10,7 +10,7 @@ if [ ! -f $USERLIST_PATH -a -n ${DRUPAL_DB_USER:-EMPTY} -a -n ${DRUPAL_DB_PASSWO
     md5)
       credential="md5$(echo -n $DRUPAL_DB_PASSWORD$DRUPAL_DB_USER | md5sum - | cut -d" " -f1)"
       ;;
-    password)
+    plain)
       credential=$DRUPAL_DB_PASSWORD
       ;;
     *)
