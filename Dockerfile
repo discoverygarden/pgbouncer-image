@@ -1,11 +1,11 @@
 ARG USER=pgbouncer
 
-# renovate: datasource=repology depName=alpine_3_21/pgbouncer versioning=loose
-ARG PGBOUNCER_VERSION=1.23.1-r0
-# renovate: datasource=repology depName=alpine_3_21/postgresql16-client versioning=loose
-ARG PGCLIENT_VERSION=16.14-r0
+# renovate: datasource=repology depName=alpine_3_24/pgbouncer versioning=loose
+ARG PGBOUNCER_VERSION=1.25.2-r0
+# renovate: datasource=repology depName=alpine_3_24/postgresql16-client versioning=loose
+ARG PGCLIENT_VERSION=16.16-r0
 
-FROM alpine:3.21.3
+FROM alpine:3.24.4
 
 ARG PGBOUNCER_VERSION
 ARG PGCLIENT_VERSION
