@@ -1,7 +1,9 @@
 ARG USER=pgbouncer
 
 # Built from source: Alpine 3.24 (and edge) only package 1.25.2, which predates
-# the fixes for CVE-2026-19888, CVE-2026-6668 and CVE-2026-107348 (1.26.0/1.26.1).
+# the fixes in 1.26.0/1.26.1: CVE-2026-19888, CVE-2026-6668, CVE-2026-6669,
+# CVE-2026-107348, CVE-2026-107349 and CVE-2026-107350 (SCRAM impersonation;
+# our md5 auth avoids it, but it is fixed here too).
 # Not tracked by Renovate: bump the version and checksum together by hand, and
 # drop the source build once Alpine packages >= 1.26.1.
 ARG PGBOUNCER_VERSION=1.26.1
@@ -16,7 +18,7 @@ ARG PGBOUNCER_SHA256
 
 RUN <<-'EOS'
 set -ex
-apk add --no-cache build-base c-ares-dev libevent-dev openssl-dev udns-dev
+apk add --no-cache build-base c-ares-dev libevent-dev openssl-dev
 wget -O /tmp/pgbouncer.tar.gz \
   "https://www.pgbouncer.org/downloads/files/${PGBOUNCER_VERSION}/pgbouncer-${PGBOUNCER_VERSION}.tar.gz"
 echo "${PGBOUNCER_SHA256}  /tmp/pgbouncer.tar.gz" | sha256sum -c -
@@ -41,7 +43,7 @@ set -ex
 apk add --no-cache \
   c-ares \
   libevent \
-  udns \
+  libssl3 \
   postgresql16-client="${PGCLIENT_VERSION}"
 EOS
 
