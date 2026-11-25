@@ -2,8 +2,7 @@ ARG USER=pgbouncer
 
 # Built from source: Alpine 3.24 (and edge) only package 1.25.2, which predates
 # the fixes in 1.26.0/1.26.1: CVE-2026-19888, CVE-2026-6668, CVE-2026-6669,
-# CVE-2026-107348, CVE-2026-107349 and CVE-2026-107350 (SCRAM impersonation;
-# our md5 auth avoids it, but it is fixed here too).
+# CVE-2026-107348, CVE-2026-107349 and CVE-2026-107350 (SCRAM impersonation).
 # Not tracked by Renovate: bump the version and checksum together by hand, and
 # drop the source build once Alpine packages >= 1.26.1.
 ARG PGBOUNCER_VERSION=1.26.1
