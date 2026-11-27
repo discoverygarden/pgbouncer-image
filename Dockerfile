@@ -60,3 +60,15 @@ ENV USER=$USER
 RUN adduser -S $USER
 
 ENTRYPOINT ["/opt/entry-point.sh"]
+
+# --------------------------------------
+# Package manifest: prints every installed package to the build log as
+#   DGI-PKG <arch> <type> <name> <version>
+# pgbouncer is built from source (build stage), so its own version is a `src` line.
+# so security checks can read versions from the image build's job log.
+# Keep this as the last step of the final stage.
+# --------------------------------------
+RUN a=$(uname -m); \
+  awk -v a="$a" '/^P:/{p=substr($0,3)} /^V:/{print "DGI-PKG", a, "apk", p, substr($0,3)}' /lib/apk/db/installed; \
+  /usr/bin/pgbouncer --version 2>/dev/null | awk -v a="$a" 'tolower($1)=="pgbouncer"{print "DGI-PKG", a, "src", "pgbouncer", $2; exit}'; \
+  true
